@@ -2,7 +2,7 @@ FROM node:18-alpine
 
 LABEL boybetby <boybetby@gmail.com>
 
-ARG PORT=8001
+ARG PORT=8000
 ARG DOCKER_IMAGE_NAME=todo-server
 
 # Create app directory
