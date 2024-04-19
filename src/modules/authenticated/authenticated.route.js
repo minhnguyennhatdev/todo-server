@@ -1,6 +1,6 @@
 const { authenticated } = require('./authenticated.handler');
 
-const PREFIX = '/authenticated';
+const PREFIX = '/api/authenticated';
 
 const route = (server) => {
   // authenticated from sso

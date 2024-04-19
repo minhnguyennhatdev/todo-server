@@ -1,6 +1,6 @@
 const { addTodo } = require("./todos.handler");
 
-const PREFIX = '/todos';
+const PREFIX = '/api/todos';
 
 const ROUTE = {
   GET_ALL: PREFIX + '',
