@@ -7,14 +7,14 @@ const todos = {
 const addTodo = (request, h) => {
   const userId = request?.user?.id
   const {
-    name, description
+    title, description
   } = request.payload
 
   const id = todos?.[userId]?.length + 1
 
   const payload = {
     id,
-    name,
+    title,
     description
   }
   todos[userId].push(payload)
