@@ -1,24 +1,20 @@
+const { buildRoute } = require('../../commons/utils/route');
 const { authenticated, me } = require('./authenticated.handler');
 
-const PREFIX = '/api/authenticated';
+const PREFIX = '/authenticated';
 
-const ROUTE = {
-  AUTHENTICATED: `${PREFIX}`,
-  ME: `${PREFIX}/me`
-}
+const routes = [{
+  method: 'GET',
+  path: '',
+  handler: authenticated
+}, {
+  method: 'GET',
+  path: '/me',
+  handler: me
+}]
 
 const route = (server) => {
-  // authenticated from sso
-  server.route({
-    method: 'GET',
-    path: ROUTE.AUTHENTICATED,
-    handler: authenticated
-  });
-  server.route({
-    method: 'GET',
-    path: ROUTE.ME,
-    handler: me
-  });
+  routes.forEach(r => { r.url = `${PREFIX}${r.path}`; return server.route(buildRoute(r), PREFIX) })
 }
 
 module.exports = {

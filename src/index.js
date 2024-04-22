@@ -11,6 +11,9 @@ const init = async () => {
   const server = Hapi.server({
     port: process.env.PORT,
     host: 'localhost',
+    routes: {
+      cors: true
+    }
   });
 
   const modules = fs.readdirSync('./src/modules');

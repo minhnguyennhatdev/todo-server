@@ -1,28 +1,16 @@
-const { addTodo } = require("./todos.handler");
+const { buildRoute } = require("../../commons/utils/route");
 
-const PREFIX = '/api/todos';
+const PREFIX = '/todos';
 
-const ROUTE = {
-  GET_ALL: PREFIX + '',
-  ADD: PREFIX + ''
-}
+const routes = [{
+  method: 'GET',
+  path: '',
+  handler: () => null
+}]
+
 
 const route = (server) => {
-  // get all todos
-  server.route({
-    method: 'GET',
-    path: ROUTE.ADD,
-    handler: (request, h) => {
-      return 'Hello World!';
-    }
-  });
-
-  // add todo
-  server.route({
-    method: 'POST',
-    path: PREFIX + '/',
-    handler: addTodo
-  });
+  routes.forEach(r => server.route(buildRoute(r), PREFIX))
 }
 
 module.exports = {
