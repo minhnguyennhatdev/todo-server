@@ -1,16 +1,31 @@
-const { buildRoute } = require("../../commons/utils/route");
+const { hasAuth } = require("../../commons/middlewares/has-auth.middleware");
+const { buildRoute } = require("../../commons/utils/route.util");
+const { addTodo, getTodos } = require("./todos.handler");
 
 const PREFIX = '/todos';
 
 const routes = [{
+  method: 'POST',
+  path: '',
+  handler: addTodo,
+  config: {
+    pre: [
+      { method: hasAuth, assign: 'm1' }
+    ]
+  },
+}, {
   method: 'GET',
   path: '',
-  handler: () => null
+  handler: getTodos,
+  config: {
+    pre: [
+      { method: hasAuth, assign: 'm1' }
+    ]
+  },
 }]
 
-
 const route = (server) => {
-  routes.forEach(r => server.route(buildRoute(r), PREFIX))
+  routes.forEach(r => server.route(buildRoute(r, PREFIX)))
 }
 
 module.exports = {

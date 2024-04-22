@@ -1,3 +1,4 @@
+const Boom = require('@hapi/boom')
 const { HTTPStatus } = require('../../commons/constants')
 const { Response } = require('../../commons/dtos/response.dto')
 const axios = require('axios')
@@ -13,24 +14,17 @@ const authenticated = async (request) => {
 
     const token = request?.query?.token
     if (!token) {
-      return new Response({
-        status: HTTPStatus.UNAUTHORIZED,
-        message: 'Unauthorized',
-      })
+      throw Boom.unauthorized();
     }
 
     const { data } = await ssoAxios.get(`/dev/authenticated?token=${token}`)
     const user = data?.data
 
     if (!user) {
-      return new Response({
-        status: HTTPStatus.UNAUTHORIZED,
-        message: 'Unauthorized',
-      })
+      throw Boom.unauthorized();
     }
 
     const jwtToken = jwt.sign(user, process.env.JWT_SECRET)
-
 
     return new Response({
       status: HTTPStatus.OK,
@@ -41,36 +35,16 @@ const authenticated = async (request) => {
     })
   } catch (error) {
     console.error(error)
-    return new Response({
-      status: HTTPStatus.UNAUTHORIZED,
-      message: 'Unauthorized',
-    })
+    throw Boom.unauthorized();
   }
 }
 
 const me = async (request) => {
   try {
-    console.log(request.headers)
-    const token = request?.headers?.authorization?.replace('Bearer ', '')
-    if (!token) {
-      return new Response({
-        status: HTTPStatus.UNAUTHORIZED,
-        message: 'Unauthorized',
-      })
-    }
-
-    const user = jwt.verify(token, process.env.JWT_SECRET)
-
+    const user = request?.user
     if (!user) {
-      return new Response({
-        status: HTTPStatus.UNAUTHORIZED,
-        message: 'Unauthorized',
-      })
+      throw Boom.unauthorized();
     }
-
-    delete user.iat
-    delete user.exp
-
     return new Response({
       status: HTTPStatus.OK,
       message: 'Authenticated',
@@ -78,10 +52,7 @@ const me = async (request) => {
     })
   } catch (error) {
     console.error(error)
-    return new Response({
-      status: HTTPStatus.UNAUTHORIZED,
-      message: 'Unauthorized',
-    })
+    throw Boom.unauthorized();
   }
 }
 

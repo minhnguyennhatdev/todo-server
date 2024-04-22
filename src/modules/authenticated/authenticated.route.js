@@ -1,4 +1,4 @@
-const { buildRoute } = require('../../commons/utils/route');
+const { buildRoute } = require('../../commons/utils/route.util');
 const { authenticated, me } = require('./authenticated.handler');
 
 const PREFIX = '/authenticated';
@@ -14,7 +14,7 @@ const routes = [{
 }]
 
 const route = (server) => {
-  routes.forEach(r => { r.url = `${PREFIX}${r.path}`; return server.route(buildRoute(r), PREFIX) })
+  routes.forEach(r => { r.url = `${PREFIX}${r.path}`; return server.route(buildRoute(r, PREFIX)) })
 }
 
 module.exports = {
