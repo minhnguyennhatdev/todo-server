@@ -11,15 +11,13 @@ const addTodo = async (request, h) => {
     title, description
   } = request.payload
 
-  const todo = Todos.build<Todos>({
+  const todo = await Todos.create({
     userId,
     title,
     description
   })
 
   console.log(todo)
-
-  await to.save()
 
   return new Response({
     data: true,
