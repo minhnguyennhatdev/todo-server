@@ -4,6 +4,7 @@ git fetch --all && git reset --hard @{u}
 
 echo "Deploying..."
 
+yarn
 
 pm2 restart ecosystem.config.js
 
