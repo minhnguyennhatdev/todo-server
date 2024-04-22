@@ -8,7 +8,7 @@ const Todos = sequelize.define('todos', {
     autoIncrement: true,
   },
   userId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   title: {
