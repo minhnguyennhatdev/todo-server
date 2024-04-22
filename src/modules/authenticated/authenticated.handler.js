@@ -22,7 +22,7 @@ const authenticated = async (request) => {
     const { data } = await ssoAxios.get(`/dev/authenticated?token=${token}`)
     const user = data?.data
 
-    if(!user) {
+    if (!user) {
       return new Response({
         status: HTTPStatus.UNAUTHORIZED,
         message: 'Unauthorized',
@@ -48,6 +48,44 @@ const authenticated = async (request) => {
   }
 }
 
+const me = async (request) => {
+  try {
+    console.log(request.headers)
+    const token = request?.headers?.authorization?.replace('Bearer ', '')
+    if (!token) {
+      return new Response({
+        status: HTTPStatus.UNAUTHORIZED,
+        message: 'Unauthorized',
+      })
+    }
+
+    const user = jwt.verify(token, process.env.JWT_SECRET)
+
+    if (!user) {
+      return new Response({
+        status: HTTPStatus.UNAUTHORIZED,
+        message: 'Unauthorized',
+      })
+    }
+
+    delete user.iat
+    delete user.exp
+
+    return new Response({
+      status: HTTPStatus.OK,
+      message: 'Authenticated',
+      data: user
+    })
+  } catch (error) {
+    console.error(error)
+    return new Response({
+      status: HTTPStatus.UNAUTHORIZED,
+      message: 'Unauthorized',
+    })
+  }
+}
+
 module.exports = {
-  authenticated
+  authenticated,
+  me
 }
