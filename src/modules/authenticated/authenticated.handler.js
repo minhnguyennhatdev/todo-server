@@ -14,7 +14,7 @@ const authenticated = async (request) => {
     const token = request?.query?.token
     if (!token) {
       return new Response({
-        status: HttpStatus.UNAUTHORIZED,
+        status: HTTPStatus.UNAUTHORIZED,
         message: 'Unauthorized',
       })
     }
