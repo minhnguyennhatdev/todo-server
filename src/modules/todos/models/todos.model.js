@@ -7,6 +7,10 @@ const Todos = sequelize.define('todos', {
     primaryKey: true,
     autoIncrement: true,
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   title: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -15,10 +19,13 @@ const Todos = sequelize.define('todos', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
+}, {
+  indexes: [
+    {
+      name: 'userId_index',
+      fields: ['userId']
+    }
+  ]
 });
 
 (async () => {
