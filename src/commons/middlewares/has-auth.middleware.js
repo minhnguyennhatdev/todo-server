@@ -4,7 +4,6 @@ const Boom = require('@hapi/boom')
 
 const hasAuth = (req, h) => {
   try {
-    console.log('Boom', req.user, Boom)
     if (!req.user) {
       throw Boom.unauthorized();
     }
