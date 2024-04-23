@@ -1,15 +1,19 @@
 const { Response } = require("../../commons/dtos/response.dto")
 const { Todos } = require("./models/todos.model")
-
-const todos = {
-  "6621e6be83244b9b19c2c79f": []
-}
+const Boom = require('@hapi/boom')
 
 const addTodo = async (request, h) => {
   const userId = request?.user?.id
-  const {
+  let {
     title, description
   } = request.payload
+
+  title = title?.trim()
+  description = description?.trim()
+
+  if (!title?.length) {
+    throw Boom.badRequest();
+  }
 
   const todo = await Todos.create({
     userId,
