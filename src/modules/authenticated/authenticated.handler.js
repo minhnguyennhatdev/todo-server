@@ -27,7 +27,7 @@ const authenticated = async (request) => {
     const jwtToken = jwt.sign(user, process.env.JWT_SECRET)
 
     return new Response({
-      status: HTTPStatus.OK,
+      statusCode: HTTPStatus.OK,
       message: 'Authenticated',
       data: {
         token: jwtToken
@@ -46,7 +46,7 @@ const me = async (request) => {
       throw Boom.unauthorized();
     }
     return new Response({
-      status: HTTPStatus.OK,
+      statusCode: HTTPStatus.OK,
       message: 'Authenticated',
       data: user
     })

@@ -1,3 +1,4 @@
+const { HTTPStatus } = require("../../commons/constants")
 const { Response } = require("../../commons/dtos/response.dto")
 const { Todos } = require("./models/todos.model")
 const Boom = require('@hapi/boom')
@@ -23,7 +24,7 @@ const addTodo = async (request, h) => {
 
   return new Response({
     data: true,
-    status: 200
+    statusCode: HTTPStatus.OK
   })
 }
 
@@ -36,7 +37,7 @@ const getTodos = async (request, h) => {
   })
   return new Response({
     data: todos,
-    status: 200
+    statusCode: HTTPStatus.OK
   })
 }
 
@@ -51,7 +52,7 @@ const deleteTodo = async (request, h) => {
   })
   return new Response({
     data: true,
-    status: 200
+    statusCode: HTTPStatus.OK
   })
 }
 

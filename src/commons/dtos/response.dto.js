@@ -1,10 +1,10 @@
 class Response {
-  status
+  statusCode
   message
   data
 
-  constructor({ status, message, data }) {
-    this.status = status
+  constructor({ statusCode, message, data }) {
+    this.statusCode = statusCode
     this.message = message
     this.data = data
   }
