@@ -21,8 +21,6 @@ const addTodo = async (request, h) => {
     description
   })
 
-  console.log(todo)
-
   return new Response({
     data: true,
     status: 200

@@ -10,6 +10,9 @@ const buildRoute = (route, prefix) => {
       return await handler(req, h)
     } catch (error) {
       console.error(error)
+      if(error.isBoom) {
+        throw error
+      }
       throw Boom.badImplementation()
     }
   }
