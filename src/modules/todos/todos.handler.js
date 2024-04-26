@@ -60,14 +60,13 @@ const updateTodo = async (request, h) => {
   const userId = request?.user?.id
   const { id } = request.params
   let {
-    title, description, status: _status
+    title, description, status
   } = request.payload
 
   title = title?.trim()
   description = description?.trim()
-  const status = TodoStatus[_status]
 
-  if (!title?.length || !status || !description?.length) {
+  if (!title?.length && !status?.length && !description?.length) {
     throw Boom.badRequest();
   }
 
