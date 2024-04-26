@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../../../databases/mysql');
 
-export const TodoStatus = {
+const TodoStatus = {
   TODO: 'TODO',
   IN_PROGRESS: 'IN_PROGRESS',
   DONE: 'DONE',
@@ -45,4 +45,5 @@ const Todos = sequelize.define('todos', {
 
 module.exports = {
   Todos,
+  TodoStatus
 };
