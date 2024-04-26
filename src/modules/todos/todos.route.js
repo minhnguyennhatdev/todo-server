@@ -1,6 +1,6 @@
 const { hasAuth } = require("../../commons/middlewares/has-auth.middleware");
 const { buildRoute } = require("../../commons/utils/route.util");
-const { addTodo, getTodos, deleteTodo } = require("./todos.handler");
+const { addTodo, getTodos, deleteTodo, updateTodo } = require("./todos.handler");
 
 const PREFIX = '/todos';
 
@@ -26,6 +26,15 @@ const routes = [{
   method: 'DELETE',
   path: '/{id}',
   handler: deleteTodo,
+  config: {
+    pre: [
+      { method: hasAuth, assign: 'm1' }
+    ]
+  }
+}, {
+  method: 'PUT',
+  path: '/{id}',
+  handler: updateTodo,
   config: {
     pre: [
       { method: hasAuth, assign: 'm1' }

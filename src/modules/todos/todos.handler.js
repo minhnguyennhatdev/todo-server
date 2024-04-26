@@ -1,6 +1,6 @@
 const { HTTPStatus } = require("../../commons/constants")
 const { Response } = require("../../commons/dtos/response.dto")
-const { Todos } = require("./models/todos.model")
+const { Todos, TodoStatus } = require("./models/todos.model")
 const Boom = require('@hapi/boom')
 
 const addTodo = async (request, h) => {
@@ -56,8 +56,41 @@ const deleteTodo = async (request, h) => {
   })
 }
 
+const updateTodo = async (request, h) => {
+  const userId = request?.user?.id
+  const { id } = request.params
+  let {
+    title, description, status: _status
+  } = request.payload
+
+  title = title?.trim()
+  description = description?.trim()
+  const status = TodoStatus[_status]
+
+  if (!title?.length) {
+    throw Boom.badRequest();
+  }
+
+  await Todos.update({
+    title,
+    description,
+    status
+  }, {
+    where: {
+      userId,
+      id
+    }
+  })
+
+  return new Response({
+    data: true,
+    statusCode: HTTPStatus.OK
+  })
+}
+
 module.exports = {
   getTodos,
   addTodo,
-  deleteTodo
+  deleteTodo,
+  updateTodo
 }
