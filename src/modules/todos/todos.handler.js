@@ -67,7 +67,7 @@ const updateTodo = async (request, h) => {
   description = description?.trim()
   const status = TodoStatus[_status]
 
-  if (!title?.length) {
+  if (!title?.length || !status || !description?.length) {
     throw Boom.badRequest();
   }
 
