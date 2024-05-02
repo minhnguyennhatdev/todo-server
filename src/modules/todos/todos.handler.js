@@ -1,3 +1,4 @@
+const { Op } = require("sequelize")
 const { HTTPStatus } = require("../../commons/constants")
 const { Response } = require("../../commons/dtos/response.dto")
 const { Todos, TodoStatus } = require("./models/todos.model")
@@ -30,13 +31,43 @@ const addTodo = async (request, h) => {
 
 const getTodos = async (request, h) => {
   const userId = request?.user?.id
-  const todos = await Todos.findAll({
+  const { page: _page = 1, pageSize: _pageSize = 10, status, search } = request.query
+
+  const page = Number(_page)
+  const pageSize = Number(_pageSize)
+
+  const offset = (page - 1) * pageSize
+  const limit = pageSize + 1
+
+  const query = {
     where: {
       userId
+    },
+    limit,
+    offset,
+  }
+
+  if (status) {
+    query.where.status = status
+  }
+
+  if (search) {
+    query.where.title = {
+      [Op.like]: `%${search}%`
     }
-  })
+  }
+
+  const result = await Todos.findAll(query)
+
+  const hasNext = result?.length > limit
+
+  const todos = result.slice(0, limit)
+
   return new Response({
-    data: todos,
+    data: {
+      todos,
+      hasNext
+    },
     statusCode: HTTPStatus.OK
   })
 }
