@@ -7,20 +7,22 @@ const Boom = require('@hapi/boom')
 const addTodo = async (request, h) => {
   const userId = request?.user?.id
   let {
-    title, description
+    title, description, status = TodoStatus.TODO
   } = request.payload
 
   title = title?.trim()
   description = description?.trim()
+  status = status?.trim()
 
   if (!title?.length) {
     throw Boom.badRequest();
   }
 
-  const todo = await Todos.create({
+  await Todos.create({
     userId,
     title,
-    description
+    description,
+    status
   })
 
   return new Response({
