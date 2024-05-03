@@ -45,6 +45,9 @@ const getTodos = async (request, h) => {
     where: {
       userId
     },
+    order: [
+      ['createdAt', 'ASC']
+    ],
     limit,
     offset,
   }
