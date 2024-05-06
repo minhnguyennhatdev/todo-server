@@ -39,7 +39,7 @@ const getTodos = async (request, h) => {
   const pageSize = Number(_pageSize)
 
   const offset = (page - 1) * pageSize
-  const limit = pageSize + 1
+  const limit = Math.min(pageSize + 1, 101)
 
   const query = {
     where: {
@@ -64,9 +64,9 @@ const getTodos = async (request, h) => {
 
   const result = await Todos.findAll(query)
 
-  const hasNext = result?.length > limit
+  const hasNext = result?.length > pageSize
 
-  const todos = result.slice(0, limit)
+  const todos = result.slice(0, pageSize)
 
   return new Response({
     data: {
