@@ -3,6 +3,7 @@ const { HTTPStatus } = require("../../commons/constants")
 const { Response } = require("../../commons/dtos/response.dto")
 const { Todos, TodoStatus } = require("./models/todos.model")
 const Boom = require('@hapi/boom')
+const { MAX_CONTENT_LENGTH } = './constants'
 
 const addTodo = async (request, h) => {
   const userId = request?.user?.id
@@ -10,8 +11,8 @@ const addTodo = async (request, h) => {
     title, description, status = TodoStatus.TODO
   } = request.payload
 
-  title = title?.trim()
-  description = description?.trim()
+  title = title?.trim()?.slice(0, MAX_CONTENT_LENGTH)
+  description = description?.trim()?.slice(0, MAX_CONTENT_LENGTH)
   status = status?.trim()
 
   if (!title?.length) {
