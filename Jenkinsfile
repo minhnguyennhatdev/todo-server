@@ -1,12 +1,12 @@
 def remote = [:]
 remote.name = 'ubuntu'
-remote.host = '15.235.163.83'
+remote.host = credentials('OVH_HOST')
 remote.allowAnyHosts = true
 
 node {
     withCredentials([
       sshUserPrivateKey(
-        credentialsId: 'OVH',
+        credentialsId: 'OVH_CREDENTIALS',
         keyFileVariable: 'identity',
         passphraseVariable: '',
         usernameVariable: 'userName'
