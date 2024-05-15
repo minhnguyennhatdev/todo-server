@@ -9,7 +9,7 @@ node {
         credentialsId: 'OVH',
         keyFileVariable: 'identity',
         passphraseVariable: '',
-        usernameVariable: 'ubuntu'
+        usernameVariable: 'userName'
       )
     ]) {
       remote.user = userName
