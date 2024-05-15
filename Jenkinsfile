@@ -17,7 +17,7 @@ node {
     remote.identityFile = identity
 
     stage('DEPLOY') {
-      sshCommand remote: remote, command: "cd /var/www/myhr/todo-server && ./deploy.sh"
+      sshCommand remote: remote, command: 'cd /var/www/myhr/todo-server && ./deploy.sh'
     }
   }
 }
