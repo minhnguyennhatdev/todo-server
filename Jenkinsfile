@@ -20,7 +20,7 @@ node {
       remote.user = userName
       remote.identityFile = identity
       stage('DEPLOY') {
-        sshCommand remote: remote, command: 'cd $REPOSITORY_PATH && ./deploy.sh'
+        sshCommand remote: remote, command: "cd ${REPOSITORY_PATH} && ./deploy.sh"
       }
     }
 }
