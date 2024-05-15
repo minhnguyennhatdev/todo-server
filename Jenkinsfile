@@ -6,10 +6,10 @@ remote.allowAnyHosts = true
 node {
     withCredentials([
       sshUserPrivateKey(
-        credentialsId: 'sshUser',
+        credentialsId: 'OVH',
         keyFileVariable: 'identity',
         passphraseVariable: '',
-        usernameVariable: 'userName'
+        usernameVariable: 'ubuntu'
       )
     ]) {
       remote.user = userName
