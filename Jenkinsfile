@@ -2,6 +2,10 @@ def remote = [:]
 remote.name = 'ubuntu'
 remote.allowAnyHosts = true
 
+environment {
+  REPOSITORY_PATH = "/var/www/myhr/todo-server"
+}
+
 node {
     withCredentials([
       sshUserPrivateKey(
@@ -16,7 +20,7 @@ node {
       remote.user = userName
       remote.identityFile = identity
       stage('DEPLOY') {
-        sshCommand remote: remote, command: 'cd /var/www/myhr/todo-server && ./deploy.sh'
+        sshCommand remote: remote, command: 'cd $REPOSITORY_PATH && ./deploy.sh'
       }
     }
 }
