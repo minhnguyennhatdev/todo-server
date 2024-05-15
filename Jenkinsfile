@@ -16,12 +16,8 @@ node {
     remote.user = userName
     remote.identityFile = identity
 
-    environment {
-      REPOSITORY_PATH = '/var/www/myhr/todo-server'
-    }
-
     stage('DEPLOY') {
-      sshCommand remote: remote, command: "cd ${REPOSITORY_PATH} && ./deploy.sh"
+      sshCommand remote: remote, command: "cd /var/www/myhr/todo-server && ./deploy.sh"
     }
   }
 }
