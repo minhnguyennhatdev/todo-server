@@ -1,12 +1,21 @@
-pipeline {
-    agent {
-        docker { image 'node:20.11.1-alpine3.19' }
-    }
-    stages {
-        stage('Test') {
-            steps {
-                sh 'node --version'
-            }
-        }
+def remote = [:]
+remote.name = 'ubuntu'
+remote.host = '15.235.163.83'
+remote.allowAnyHosts = true
+
+node {
+    withCredentials([
+      sshUserPrivateKey(
+        credentialsId: 'sshUser',
+        keyFileVariable: 'identity',
+        passphraseVariable: '',
+        usernameVariable: 'userName'
+      )
+    ]) {
+      remote.user = userName
+      remote.identityFile = identity
+      stage('DEPLOY') {
+        sshCommand remote: remote, command: 'cd /var/www/myhr/todo-server && ./deploy.sh'
+      }
     }
 }
