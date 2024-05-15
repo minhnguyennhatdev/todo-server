@@ -1,6 +1,5 @@
 def remote = [:]
 remote.name = 'ubuntu'
-remote.host = credentials('OVH_HOST')
 remote.allowAnyHosts = true
 
 node {
@@ -10,8 +9,10 @@ node {
         keyFileVariable: 'identity',
         passphraseVariable: '',
         usernameVariable: 'userName'
-      )
+      ),
+      string(credentialsId: 'OVH_HOST', variable: 'ovhHost')
     ]) {
+      remote.host = ovhHost
       remote.user = userName
       remote.identityFile = identity
       stage('DEPLOY') {
