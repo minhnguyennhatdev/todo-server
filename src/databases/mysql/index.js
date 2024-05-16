@@ -6,6 +6,7 @@ const sequelize = new Sequelize(process.env.MYSQL_URL, {
     min: 0,
     idle: 10000
   },
+  logging: true,
 })
 
 module.exports = {
