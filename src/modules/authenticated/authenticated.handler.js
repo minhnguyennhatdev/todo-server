@@ -26,6 +26,8 @@ const authenticated = async (request) => {
 
     const jwtToken = jwt.sign(user, process.env.JWT_SECRET)
 
+    console.log('user authenticated: ', user)
+
     return new Response({
       statusCode: HTTPStatus.OK,
       message: 'Authenticated',
