@@ -17,12 +17,8 @@ const authenticated = async (request) => {
       throw Boom.unauthorized();
     }
 
-    const response = await ssoAxios.get(`/dev/authenticated?token=${token}`)
-
-    console.log(response)
-    const user = response?.data?.data
-
-    console.log('user authenticated: ', data)
+    const { data } = await ssoAxios.get(`/dev/authenticated?token=${token}`)
+    const user = data?.data
 
     if (!user) {
       throw Boom.unauthorized();
