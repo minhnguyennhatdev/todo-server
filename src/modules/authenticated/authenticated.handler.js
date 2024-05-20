@@ -20,13 +20,13 @@ const authenticated = async (request) => {
     const { data } = await ssoAxios.get(`/dev/authenticated?token=${token}`)
     const user = data?.data
 
+    console.log('user authenticated: ', user)
+
     if (!user) {
       throw Boom.unauthorized();
     }
 
     const jwtToken = jwt.sign(user, process.env.JWT_SECRET)
-
-    console.log('user authenticated: ', user)
 
     return new Response({
       statusCode: HTTPStatus.OK,
