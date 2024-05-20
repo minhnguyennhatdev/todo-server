@@ -17,7 +17,21 @@ const init = async () => {
   });
 
   server.ext('onRequest', (request, h) => {
+    console.log('onRequest', {
+      method: request.method,
+      url: request.url.href,
+      path: request.path,
+      query: request.query,
+      payload: request.payload,
+    });
     auth(request, h)
+    return h.continue;
+  });
+
+  server.ext('onPreResponse', (request, h) => {
+    console.log('onPreResponse', {
+      response: request?.response?.source,
+    });
     return h.continue;
   });
 
